@@ -15,11 +15,14 @@ var (
 )
 
 func main() {
+	// Check system requirements
+	config.CheckSystemRequirements(cfg)
+
 	svc := service.New(repo)
-	本 := api.New(cfg.API, svc)
-	本.Start()
+	couponAPI := api.New(cfg.API, svc)
+	couponAPI.Start()
 	fmt.Println("Starting Coupon service server")
 	<-time.After(1 * time.Hour * 24 * 365)
 	fmt.Println("Coupon service server alive for a year, closing")
-	本.Close()
+	couponAPI.Close()
 }
