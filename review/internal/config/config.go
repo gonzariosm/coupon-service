@@ -10,14 +10,20 @@ import (
 
 type Config struct {
 	API           api.Config
-	RequiredCores int `env:"REQUIRED_CORES"`
+	RequiredCores int `config:"env=cores"`
 }
 
 func New() Config {
-	cfg := Config{}
+	cfg := Config{
+		API: api.Config{
+			Port: 8080,
+		},
+		RequiredCores: 1,
+	}
 	if err := alligotor.Get(&cfg); err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("Loaded Config: %+v\n", cfg)
 	return cfg
 }
 
