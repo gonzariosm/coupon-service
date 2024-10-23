@@ -13,6 +13,12 @@ RUN go mod download
 
 COPY . .
 
+# Argument to control whether tests are run
+ARG RUN_TESTS=true
+
+# Run tests based on the argument
+RUN if [ "$RUN_TESTS" = "true" ]; then go test ./... -v; fi
+
 WORKDIR /go/src/coupon-service/cmd/coupon_service
 RUN go build -ldflags="-s -w" -o main .
 

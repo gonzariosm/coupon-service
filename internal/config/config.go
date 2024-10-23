@@ -30,7 +30,7 @@ func New() Config {
 
 func CheckSystemRequirements(cfg Config) {
 	requiredCores := cfg.RequiredCores
-	if requiredCores != runtime.NumCPU() {
-		log.Printf("this API is meant to be run on %d core machines\n", requiredCores)
+	if requiredCores >= runtime.NumCPU() {
+		log.Printf("WARNING: This API is intended to run on machines with %d cores, but the number of cores on the current host is %d\n", requiredCores, runtime.NumCPU())
 	}
 }

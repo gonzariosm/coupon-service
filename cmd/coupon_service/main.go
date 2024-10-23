@@ -11,25 +11,10 @@ import (
 	"syscall"
 )
 
-var (
-	cfg  = config.New()
-	repo = memdb.New()
-)
-
-// func main() {
-// 	// Check system requirements
-// 	config.CheckSystemRequirements(cfg)
-
-// 	svc := service.New(repo)
-// 	couponAPI := api.New(cfg.API, svc)
-// 	couponAPI.Start()
-// 	fmt.Println("Starting Coupon service server")
-// 	<-time.After(1 * time.Hour * 24 * 365)
-// 	fmt.Println("Coupon service server alive for a year, closing")
-// 	couponAPI.Close()
-// }
-
 func main() {
+	cfg := config.New()
+	repo := memdb.New()
+
 	// Check system requirements
 	config.CheckSystemRequirements(cfg)
 
@@ -47,6 +32,7 @@ func main() {
 	signal.Notify(signalChan, os.Interrupt, syscall.SIGTERM)
 
 	// Block until receive a term signal
+	// TODO: IMHO is not the best practice set a "timer" here to shutdown the service
 	sig := <-signalChan
 	fmt.Printf("Received signal: %v. Shutting down the server...\n", sig)
 

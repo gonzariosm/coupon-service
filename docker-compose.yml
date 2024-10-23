@@ -1,0 +1,14 @@
+services:
+  coupon-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUN_TESTS: "false" # enable this to run test in the build process
+    ports:
+      - "8080:8081"
+    environment:
+      - GIN_MODE=release # gin mode (debug|release|test)
+      - API_PORT=8081 # app port
+      - CORES=12 # recommended cores
+    restart: unless-stopped
