@@ -15,6 +15,7 @@ type Config struct {
 
 func New() Config {
 	cfg := Config{
+		// Default configuration
 		API: api.Config{
 			Port: 8080,
 		},
@@ -29,11 +30,6 @@ func New() Config {
 
 func CheckSystemRequirements(cfg Config) {
 	requiredCores := cfg.RequiredCores
-	if requiredCores == 0 {
-		log.Println("REQUIRED_CORES is not set, defaulting to 32 cores")
-		requiredCores = 32
-	}
-
 	if requiredCores != runtime.NumCPU() {
 		log.Printf("this API is meant to be run on %d core machines\n", requiredCores)
 	}
